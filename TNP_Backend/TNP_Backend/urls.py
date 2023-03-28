@@ -15,7 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    path('forms/', views.getForms, name='get_forms'),
+    path('form/<int:formId>/', views.getForm, name='get_form'),
+    path('form/', views.postForm, name='post_form'),
+    path('form/<int:formId>/', views.putForm, name='put_form'),
+    path('form/<int:formId>/', views.delForm, name='del_form'),
 ]
