@@ -75,8 +75,12 @@ WSGI_APPLICATION = 'TNP_Backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'TNP_Housing',
+        'USER': 'admin',
+        'PASSWORD': 'admin',
+        'HOST': '34.131.211.243',
+        'PORT': '3306',
     }
 }
 
