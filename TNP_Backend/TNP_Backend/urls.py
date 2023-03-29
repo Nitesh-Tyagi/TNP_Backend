@@ -15,14 +15,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from . import views
+from Backend import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('forms/', views.getForms, name='get_forms'),
-    path('form/<int:formId>/', views.getForm, name='get_form'),
-    path('form/', views.postForm, name='post_form'),
-    path('form/<int:formId>/', views.putForm, name='put_form'),
-    path('form/<int:formId>/', views.delForm, name='del_form'),
+    path('getForms/', views.getForms, name='get_forms'),
+    path('getForm/<int:formId>/', views.getForm, name='get_form'),
+    path('postForm/', views.postForm, name='post_form'),
+    path('putForm/<int:formId>/', views.putForm, name='put_form'),
+    path('delForm/<int:formId>/', views.delForm, name='del_form'),
+    path('getSettings/<int:userId>/', views.getSettings, name='get_settings'),
+    path('putSettings/<int:userId>/', views.putSettings, name='put_settings'),
+    path('getRooms/', views.getRooms, name='get_rooms'),
+    path('getRoom/<int:roomId>/', views.getRoom, name='get_room'),
+    path('putRoom/<int:roomId>/', views.putRoom, name='put_room'),
+    path('sendBack/<int:formId>/<int:userId>/', views.send_back),
 ]

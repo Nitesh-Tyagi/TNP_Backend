@@ -97,3 +97,78 @@ def delForm(request, formId):
 
     instance.delete()
     return Response(status=204)
+
+
+@api_view(['GET'])
+def getSettings(request, userId):
+    try:
+        settings = Emails.objects.get(ID=userId)
+    except Emails.DoesNotExist:
+        return Response(status=404)
+    
+    serializer = EmailsSerializer(settings)
+    return Response(serializer.data)
+
+@api_view(['PUT'])
+def putSettings(request, userId):
+    try:
+        settings = Emails.objects.get(ID=userId)
+    except Emails.DoesNotExist:
+        return Response(status=404)
+    
+    serializer = EmailsSerializer(settings, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=400)
+
+@api_view(['GET'])
+def getRooms(request):
+    rooms = Hostel.objects.all()
+    serializer = HostelSerializer(rooms, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getRoom(request, roomId):
+    rooms = Hostel.objects.filter(RoomID=roomId)
+    serializer = HostelSerializer(rooms, many=False)
+    return Response(serializer.data)
+
+@api_view(['PUT'])
+def putRoom(request, roomId):
+    try:
+        room = Hostel.objects.get(RoomID=roomId)
+    except Hostel.DoesNotExist:
+        return Response(status=404)
+    
+    serializer = HostelSerializer(room, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=400)
+
+@api_view(['PUT'])
+def send_back(request, formId, userId):
+    try:
+        guest = TNPGuest.objects.get(FormID=formId)
+    except TNPGuest.DoesNotExist:
+        return Response({"error": "Guest not found"}, status=404)
+    
+    if userId == 2:
+        guest.AOCheck = 0
+        guest.Comment = request.data.get("Comment")
+        guest.SentBack = 1
+    elif userId == 3:
+        guest.AOCheck = 0
+        guest.SupervisorCheck = 0
+        guest.Comment = request.data.get("Comment")
+        guest.SentBack = 1
+    elif userId == 4:
+        guest.SupervisorCheck = 0
+        guest.VCCheck = 0
+        guest.Comment = request.data.get("Comment")
+        guest.SentBack = 1
+    
+    guest.save()
+    serializer = TNPGuestSerializer(guest)
+    return Response(serializer.data)

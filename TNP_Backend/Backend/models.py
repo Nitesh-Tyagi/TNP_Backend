@@ -21,6 +21,7 @@ class TNPGuest(models.Model):
     SentBack = models.BooleanField()
 
     class Meta:
+        app_label = 'Backend'
         ordering = ['FormID']
 
 class Hostel(models.Model):
@@ -33,6 +34,7 @@ class Hostel(models.Model):
     Status = models.BooleanField()
 
     class Meta:
+        app_label = 'Backend'
         ordering = ['RoomID']
 
 class Emails(models.Model):
@@ -41,4 +43,5 @@ class Emails(models.Model):
     Password = models.CharField(max_length=30)
 
     class Meta:
+        app_label = 'Backend'
         ordering = ['ID']
