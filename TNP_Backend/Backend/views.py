@@ -172,3 +172,14 @@ def send_back(request, formId, userId):
     guest.save()
     serializer = TNPGuestSerializer(guest)
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+def login(request):
+    username = request.data['username']
+    password = request.data['password']
+    emails = Emails.objects.all()
+    for email in emails:
+        if email.Email == username and email.Password == password:
+            return Response({'ID': email.ID})
+    return Response({'ID': 0})

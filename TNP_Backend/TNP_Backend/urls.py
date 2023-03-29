@@ -31,4 +31,5 @@ urlpatterns = [
     path('getRoom/<int:roomId>/', views.getRoom, name='get_room'),
     path('putRoom/<int:roomId>/', views.putRoom, name='put_room'),
     path('sendBack/<int:formId>/<int:userId>/', views.send_back),
+    path('login/', views.login),
 ]
